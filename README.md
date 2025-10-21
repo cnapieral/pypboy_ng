@@ -15,11 +15,13 @@ Supports caching and offline loading of maps.
 
 Start with:
 
+'''
 git clone
 cd pypboy_ng
 uv init
 uv add requirements.txt
 uv sync
+'''
 
 * In config.py set 'LOAD_CACHED_MAP = False'
 * Run the application once
