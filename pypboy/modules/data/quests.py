@@ -1,6 +1,8 @@
 import pypboy
-
-
+  
+  
 class Module(pypboy.SubModule):
-
-	label = "Quests"
+    label = "Quests"
+    
+    def __init__(self, *args, **kwargs):
+        super(Module, self).__init__(*args, **kwargs)

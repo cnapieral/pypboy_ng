@@ -4,112 +4,112 @@ import game
 import config
 
 class Module(pypboy.SubModule):
+    label = " Weapons "
+    
+    def __init__(self, *args, **kwargs):
+        super(Module, self).__init__((config.WIDTH, config.HEIGHT), *args, **kwargs)
+        
+        # Create weapon instances
+        self.weapons = [
+            # Weapon("Chinese Army Knife", "images/weapons/knife.png", 5, 1, 20, 100, "Standard issue"),
+            # Weapon("Combat Knife", "images/weapons/knife.png", 10, 2, 35, 100, "Sharp edge"),
+            # Weapon("Sword", "images/weapons/sword.png", 15, 5, 50, 100, "Rusty but effective"),
+            # Weapon("Pistol", "images/weapons/pistol.png", 20, 3, 80, 100, "Small but deadly"),
+            # Weapon("Shotgun", "images/weapons/shotgun.png", 35, 8, 120, 100, "High damage"),
+            Weapon("Flammenwerfer", "images/weapons/flamer.png", 45, 10, 200, 100, "Brenn es nieder")
+        ]
+        
+        # Set up the weapon display
+        self.selected_weapon = self.weapons[0]  # Default to first weapon
+        
+        # Create menu items for weapons
+        menu_items = []
+        for weapon in self.weapons:
+            menu_items.append(weapon.name)
+        
+        # Create menu (this would need to be properly implemented based on your framework)
+        # self.menu = pypboy.Menu(menu_items, self.change_items)
+        
+        # Display the selected weapon with stats
+        self.display_weapon_stats(self.selected_weapon)
+    
+    def display_weapon_stats(self, weapon):
+        # Add weapon to display
+        self.add(weapon)
+        
+        # Draw stats on weapon image
+        if weapon.image:
+            # Draw value stat
+            pygame.draw.line(weapon.image, (95, 255, 177), 
+                           (weapon.image.get_width() - 2, 200), 
+                           (weapon.image.get_width() - 2, 220), 2)
+            pygame.draw.line(weapon.image, (95, 255, 177), 
+                           (weapon.image.get_width() - 85, 200), 
+                           (weapon.image.get_width(), 200), 2)
+            text = config.FONTS[14].render(str(weapon.value), True, (95, 255, 177), (0, 0, 0))
+            weapon.image.blit(text, (weapon.image.get_width() - 85 - (text.get_width() + 5), 204))
+            text = config.FONTS[14].render("VAL", True, (95, 255, 177), (0, 0, 0))
+            weapon.image.blit(text, (weapon.image.get_width() - 85 + 2, 204))
+            
+            # Draw weight stat
+            pygame.draw.line(weapon.image, (95, 255, 177), 
+                           (weapon.image.get_width() - 95, 200), 
+                           (weapon.image.get_width() - 95, 220), 2)
+            pygame.draw.line(weapon.image, (95, 255, 177), 
+                           (weapon.image.get_width() - 95 - 85, 200), 
+                           (weapon.image.get_width() - 95, 200), 2)
+            text = config.FONTS[14].render(str(weapon.weight), True, (95, 255, 177), (0, 0, 0))
+            weapon.image.blit(text, (weapon.image.get_width() - 95 - (text.get_width() + 5), 204))
+            text = config.FONTS[14].render("WG", True, (95, 255, 177), (0, 0, 0))
+            weapon.image.blit(text, (weapon.image.get_width() - 95 - 85 + 2, 204))
+            
+            # Draw damage stat
+            pygame.draw.line(weapon.image, (95, 255, 177), 
+                           (weapon.image.get_width() - 190, weapon.image.get_height() - 80), 
+                           (weapon.image.get_width() - 190, weapon.image.get_height() - 60), 2)
+            pygame.draw.line(weapon.image, (95, 255, 177), 
+                           (weapon.image.get_width() - 190 - 85, 200), 
+                           (weapon.image.get_width() - 190, 200), 2)
+            text = config.FONTS[14].render(str(weapon.damage), True, (95, 255, 177), (0, 0, 0))
+            weapon.image.blit(text, (weapon.image.get_width() - 190 - (text.get_width() + 5), 204))
+            text = config.FONTS[14].render("DAM", True, (95, 255, 177), (0, 0, 0))
+            weapon.image.blit(text, (weapon.image.get_width() - 190 - 85 + 2, 204))
+            
+            # Row 2
+            pygame.draw.line(weapon.image, (95, 255, 177), 
+                           (weapon.image.get_width() - 2, 230), 
+                           (weapon.image.get_width() - 2, 250), 2)
+            text = config.FONTS[14].render("-- --", True, (95, 255, 177), (0, 0, 0))
+            weapon.image.blit(text, (weapon.image.get_width() - 95 - 85 + 2, 234))
+            pygame.draw.line(weapon.image, (95, 255, 177), 
+                           (weapon.image.get_width() - 95 - 85, 230), 
+                           (weapon.image.get_width(), 230), 2)
+            
+            # Draw condition
+            pygame.draw.line(weapon.image, (95, 255, 177), 
+                           (weapon.image.get_width() - 190, 230), 
+                           (weapon.image.get_width() - 190, 250), 2)
+            pygame.draw.line(weapon.image, (95, 255, 177), 
+                           (weapon.image.get_width() - 190 - 85, 230), 
+                           (weapon.image.get_width() - 190, 230), 2)
+            pygame.draw.rect(weapon.image, (95, 255, 177), 
+                           (weapon.image.get_width() - 190 - 55, 237, 40, 12))
+            pygame.draw.rect(weapon.image, (0, 70, 0), 
+                           (weapon.image.get_width() - 190 - 55 + 40, 237, 10, 12))
+            text = config.FONTS[14].render("CND", True, (95, 255, 177), (0, 0, 0))
+            weapon.image.blit(text, (weapon.image.get_width() - 190 - 85 + 2, 234))
 
-	label = " Weapons "
+    def change_items(self):
+        print("Changing")
 
-	def __init__(self, *args, **kwargs):
-		super(Module, self).__init__((config.WIDTH, config.HEIGHT), *args, **kwargs)
-		handlers = []
-		item_names = []
-		INVENTORY = [
-			Weapon('Chinese Assault Rifle','images/inventory/flamer.png',0,0,0,0,''),
-			Weapon('Combat Shotgun','images/inventory/flamer.png',0,0,0,0,''),
-			Weapon('Deathclaw Gauntlet','images/inventory/flamer.png',0,0,0,0,''),
-			Weapon('Flamer','images/inventory/flamer.png',20,10,250,100,''),
-			Weapon('Hunting Rifle','images/inventory/flamer.png',0,0,0,0,''),
-			Weapon('Minigun','images/inventory/flamer.png',0,0,0,0,''),
-			Weapon('Missile Launcher','images/inventory/flamer.png',0,0,0,0,''),
-			Weapon('Pulse Grenade (2)','images/inventory/flamer.png',0,0,0,0,'')
-		]
-		selected = 3
-		for i in INVENTORY:
-			handlers.append(self.change_items)
-			item_names.append(i.name)
-		self.menu = pypboy.ui.Menu(200, item_names, handlers, selected, 15)
-		self.menu.rect[0] = 4
-		self.menu.rect[1] = 60
-		self.add(self.menu)
-		#show weapon image
-		weapon_to_display = INVENTORY[selected]
-		weapon_to_display.rect = weapon_to_display.image.get_rect()
-		weapon_to_display.image = weapon_to_display.image.convert()
-		weapon_to_display.rect[0] = 189
-		weapon_to_display.rect[1] = 40
-		
-		print "RECTANGLE %s %s %s %s" % (weapon_to_display.rect[0],weapon_to_display.rect[1],weapon_to_display.rect[2],weapon_to_display.rect[3])
-		
-		#Show Weapon stats - Value
-		#text = config.FONTS[14].render("%s" %(weapon_to_display.value), True, (95, 255, 177), (0, 0, 0))
-		#pygame.draw.line(weapon_to_display.image, (95, 255, 177), (config.WIDTH - 13, weapon_to_display.rect[1] + weapon_to_display.image.get_rect()[3] + 5 ), (config.WIDTH - 13, weapon_to_display.rect[1] + weapon_to_display.image.get_rect()[3] + 25), 2)	#End of title Verticle bar
-		#weapon_to_display.image.blit(text, (config.WIDTH - (text.get_width() + 5), weapon_to_display.rect[1] + weapon_to_display.image.get_rect()[3] + 9))
-		#pygame.draw.line(weapon_to_display.image, (95, 255, 177), (config.WIDTH - 50, 15), (config.WIDTH - 13, weapon_to_display.rect[1] + weapon_to_display.image.get_rect()[3] + 5 ), 2) # Horizontal Bar
-		
-		#pygame.draw.line(weapon_to_display.image, (95, 255, 177), (config.WIDTH - 13, 200 ), (config.WIDTH - 13, 215), 2)	#End of title Verticle bar
-		#weapon_to_display.image.blit(text, (config.WIDTH - (text.get_width() + 5), weapon_to_display.rect[1] + weapon_to_display.image.get_rect()[3] + 9))
-		#pygame.draw.line(weapon_to_display.image, (95, 255, 177), (config.WIDTH - 50, 15), (config.WIDTH - 13, weapon_to_display.rect[1] + weapon_to_display.image.get_rect()[3] + 5 ), 2) # Horizontal Bar
-		
-		#Test starts here
-		#Value
-		pygame.draw.line(weapon_to_display.image, (95, 255, 177), (weapon_to_display.rect[2] - 2, 200-weapon_to_display.rect[1]), (weapon_to_display.rect[2] -2, 220-weapon_to_display.rect[1]), 2)#Verticle Bar
-		pygame.draw.line(weapon_to_display.image, (95, 255, 177), (weapon_to_display.rect[2] - 85, 200-weapon_to_display.rect[1]), (weapon_to_display.rect[2], 200-weapon_to_display.rect[1]), 2) # Horizontal Bar
-		text = config.FONTS[14].render("25", True, (95, 255, 177), (0, 0, 0))
-		weapon_to_display.image.blit(text, (weapon_to_display.rect[2] - 0 - (text.get_width() + 5), 204-weapon_to_display.rect[1]))
-		text = config.FONTS[14].render("VAL", True, (95, 255, 177), (0, 0, 0))
-		weapon_to_display.image.blit(text, (weapon_to_display.rect[2] - 0 - 85 + 2, 204-weapon_to_display.rect[1]))
-		
-		
-		
-		#Weight
-		pygame.draw.line(weapon_to_display.image, (95, 255, 177), (weapon_to_display.rect[2] - 95, 200-weapon_to_display.rect[1]), (weapon_to_display.rect[2] - 95, 220-weapon_to_display.rect[1]), 2)#Verticle Bar
-		pygame.draw.line(weapon_to_display.image, (95, 255, 177), (weapon_to_display.rect[2] - 95 - 85, 200-weapon_to_display.rect[1]), (weapon_to_display.rect[2] - 95, 200-weapon_to_display.rect[1]), 2) # Horizontal Bar
-		text = config.FONTS[14].render("10", True, (95, 255, 177), (0, 0, 0))
-		weapon_to_display.image.blit(text, (weapon_to_display.rect[2] - 95 - (text.get_width() + 5), 204-weapon_to_display.rect[1]))
-		text = config.FONTS[14].render("WG", True, (95, 255, 177), (0, 0, 0))
-		weapon_to_display.image.blit(text, (weapon_to_display.rect[2]  - 95 - 85 + 2, 204-weapon_to_display.rect[1]))
-		
-		
-		
-		
-		#Damage
-		pygame.draw.line(weapon_to_display.image, (95, 255, 177), (weapon_to_display.rect[2] - 190, weapon_to_display.rect[3] - 80 - weapon_to_display.rect[1]), (weapon_to_display.rect[2] - 190, weapon_to_display.rect[3] - 60 - weapon_to_display.rect[1]), 2)#Verticle Bar
-		pygame.draw.line(weapon_to_display.image, (95, 255, 177), (weapon_to_display.rect[2] - 190 - 85, 200-weapon_to_display.rect[1]), (weapon_to_display.rect[2] - 190, 200-weapon_to_display.rect[1]), 2) # Horizontal Bar
-		text = config.FONTS[14].render("20", True, (95, 255, 177), (0, 0, 0))
-		weapon_to_display.image.blit(text, (weapon_to_display.rect[2] - 190 - (text.get_width() + 5), 204-weapon_to_display.rect[1]))
-		text = config.FONTS[14].render("DAM", True, (95, 255, 177), (0, 0, 0))
-		weapon_to_display.image.blit(text, (weapon_to_display.rect[2]  - 190 - 85 + 2, 204-weapon_to_display.rect[1]))
-		
-				
-		#Row 2
-		pygame.draw.line(weapon_to_display.image, (95, 255, 177), (weapon_to_display.rect[2] - 2, 230-weapon_to_display.rect[1]), (weapon_to_display.rect[2] - 2, 250-weapon_to_display.rect[1]), 2)
-		text = config.FONTS[14].render("-- --", True, (95, 255, 177), (0, 0, 0))
-		weapon_to_display.image.blit(text, (weapon_to_display.rect[2] - 95 - 85 + 2, 234-weapon_to_display.rect[1]))
-		pygame.draw.line(weapon_to_display.image, (95, 255, 177), (weapon_to_display.rect[2] - 95 - 85, 230-weapon_to_display.rect[1]), (weapon_to_display.rect[2], 230-weapon_to_display.rect[1]), 2) # Horizontal Bar
-		
-		#Condition
-		pygame.draw.line(weapon_to_display.image, (95, 255, 177), (weapon_to_display.rect[2] - 190, 230-weapon_to_display.rect[1]), (weapon_to_display.rect[2] - 190, 250-weapon_to_display.rect[1]), 2)#Verticle Bar
-		pygame.draw.line(weapon_to_display.image, (95, 255, 177), (weapon_to_display.rect[2] - 190 - 85, 230-weapon_to_display.rect[1]), (weapon_to_display.rect[2] - 190, 230-weapon_to_display.rect[1]), 2) # Horizontal Bar
-		cndlength = 50
-		pygame.draw.rect(weapon_to_display.image, (95, 255, 177), (weapon_to_display.rect[2] - 190 - 55,237-weapon_to_display.rect[1],40,12)) #Condition bar
-		pygame.draw.rect(weapon_to_display.image, (0, 70, 0), (weapon_to_display.rect[2] - 190 - 55 + 40,237-weapon_to_display.rect[1],10,12))#Filler bar
-		text = config.FONTS[14].render("CND", True, (95, 255, 177), (0, 0, 0))
-		weapon_to_display.image.blit(text, (weapon_to_display.rect[2]  - 190 - 85 + 2, 234-weapon_to_display.rect[1]))
-		
-		#Test ends here
-		
-		self.add(weapon_to_display)	
-
-		
-	def change_items(self):
-		print "Changing"
-		
 class Weapon(game.Entity):
-	def __init__(self, name, imageloc, damage, weight, value, condition, notes): 
-		super(Weapon, self).__init__((config.WIDTH, config.HEIGHT))
-		self.name = name
-		self.imageloc = imageloc
-		self.image = pygame.image.load(self.imageloc)
-		self.damage = damage
-		self.weight= weight
-		self.value = value
-		self.condition = condition
-		self.notes = notes
+    def __init__(self, name, imageloc, damage, weight, value, condition, notes):
+        super(Weapon, self).__init__((config.WIDTH, config.HEIGHT))
+        self.name = name
+        self.imageloc = imageloc
+        self.image = pygame.image.load(self.imageloc)
+        self.damage = damage
+        self.weight = weight
+        self.value = value
+        self.condition = condition
+        self.notes = notes

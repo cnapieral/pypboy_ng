@@ -8,6 +8,7 @@ class Engine(object):
 
 	def __init__(self, title, width, height, *args, **kwargs):
 		super(Engine, self).__init__(*args, **kwargs)
+		self.active = None
 		#self.window = pygame.display.set_mode((width, height),pygame.FULLSCREEN)
 		self.window = pygame.display.set_mode((width, height))
 		self.screen = pygame.display.get_surface()
@@ -65,6 +66,7 @@ class EntityGroup(pygame.sprite.LayeredDirty):
 class Entity(pygame.sprite.DirtySprite):
 	def __init__(self, dimensions=(0, 0), layer=0, *args, **kwargs):
 		super(Entity, self).__init__(*args, **kwargs)
+		self.active = None
 		self.image = pygame.surface.Surface(dimensions)
 		self.rect = self.image.get_rect()
 		self.image = self.image.convert()
