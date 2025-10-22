@@ -23,6 +23,7 @@ uv add requirements.txt
 uv sync
 ```
 
+* Coordinates must be checked on google maps, eg. https://www.google.de/maps/place/Berlin/@52.5067296,13.2599302 -> then config should look like : MAP_FOCUS = (13.2599302, 52.5067296)
 * In config.py set 'LOAD_CACHED_MAP = False'
 * Run the application once
 * In config.py set 'LOAD_CACHED_MAP = True'
