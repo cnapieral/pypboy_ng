@@ -1,29 +1,48 @@
-pypboy
+pypboy_ng
 ======
+
+This fork brings pypboy to the present, by migrate it to python 3.x, adds new features and fixing stuff.
 
 Remember that one Python Pip-Boy 3000 project? Neither do we!<br>
 Python/Pygame interface, emulating that of the Pipboy-3000.<br> 
 Uses OSM for map data and has been partially tailored to respond to physical switches over Raspberry Pi's GPIO<br>
 
+
 ## Features
 
 Work with Screen TFT 3.5" Capacitive of Adafruit<br>
 Supports caching and offline loading of maps.
+
+Start with:
+
+```
+git clone
+cd pypboy_ng
+uv init
+uv add requirements.txt
+uv sync
+```
+
+* Coordinates must be checked on google maps, eg. https://www.google.de/maps/place/Berlin/@52.5067296,13.2599302 -> then config should look like : MAP_FOCUS = (13.2599302, 52.5067296)
 * In config.py set 'LOAD_CACHED_MAP = False'
 * Run the application once
 * In config.py set 'LOAD_CACHED_MAP = True'
 * Pypboy will now load the cached map on starting
 
-## Autors
+Additional:
+* Migrated to modern python 3.x Version
+* uv as packet-manager 
+* systemd starup service and config for headless start directly after booting
+
+Planed in future:
+* fully working maps (I never get the old custom mapping running)
+* Fixing issues with UI
+* more to come
+
+## Thanks to 
 * Fixes and Updates by Goldstein
-
 * Updates by Sabas of The Inventor's House Hackerspace
-
-* Originally by grieve work original<br>
-
-## Special Thanks
-
-Ruiz Brothers for the mention in [Adafruit](https://learn.adafruit.com/raspberry-pi-pipboy-3000/overview) 
+* Originally by grieve work original
 
 ## License
 MIT
